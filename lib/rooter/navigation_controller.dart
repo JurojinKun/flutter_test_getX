@@ -23,6 +23,7 @@ class _NavigationControllerState extends State<NavigationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       bottomNavigationBar: NavigationBarCustom(
           currentIndex: currentIndex,
           onDestinationSelected: (index) => _goBranch(index)),

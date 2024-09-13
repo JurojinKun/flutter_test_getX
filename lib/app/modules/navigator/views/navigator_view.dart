@@ -14,6 +14,7 @@ class NavigatorView extends GetView<NavigatorController> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
+        extendBody: true,
         body: IndexedStack(
           index: controller.currentIndex.value,
           children: const [

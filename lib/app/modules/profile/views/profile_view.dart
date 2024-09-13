@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_getx/app/widgets/app_bar_custom.dart';
 
 import 'package:get/get.dart';
 
@@ -9,10 +10,11 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ProfileView'),
-        centerTitle: true,
-      ),
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+            preferredSize: Size(MediaQuery.of(context).size.width,
+                AppBar().preferredSize.height),
+            child: const AppBarCustom(title: "ProfileView")),
       body: const Center(
         child: Text(
           'ProfileView is working',

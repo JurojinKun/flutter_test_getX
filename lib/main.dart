@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_getx/app/theme/custom_theme.dart';
+import 'package:flutter_test_getx/app/theme/theme_service.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'app/routes/app_pages.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -19,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: "Flutter Test Getx",
       theme: CustomTheme.lightTheme,
       darkTheme: CustomTheme.darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeService().theme,
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
     );

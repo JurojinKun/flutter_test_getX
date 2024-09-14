@@ -36,11 +36,11 @@ class HomeView extends GetView<HomeController> {
       onTap: () => Get.toNamed(Routes
           .profile), //add id:number corresponds to nested key wrapper to stack navigation bottom bar,
       child: Card(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: Theme.of(context).colorScheme.secondary,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        elevation: 4,
-        shadowColor: Theme.of(context).primaryColor,
+        elevation: 6,
+        shadowColor: Theme.of(context).colorScheme.primary,
         child: Center(
           child: Text(index.toString()),
         ),

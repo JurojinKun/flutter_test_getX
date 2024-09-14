@@ -6,11 +6,16 @@ class CustomTheme {
   static Color primaryColor = const Color(0xFFee1515),
       white = const Color(0xFFfbfbfb),
       black = const Color(0xFF222224),
-      transparent = Colors.transparent;
+      transparent = Colors.transparent,
+      whiteSecondary = Colors.white,
+      blackSecondary = Colors.black;
 
   static final lightTheme = ThemeData(
-    primaryColor: primaryColor,
-    brightness: Brightness.light,
+    colorScheme: ColorScheme.fromSeed(
+        brightness: Brightness.light,
+        primary: primaryColor,
+        secondary: whiteSecondary,
+        seedColor: primaryColor),
     scaffoldBackgroundColor: white,
     indicatorColor: black,
     useMaterial3: true,
@@ -34,8 +39,11 @@ class CustomTheme {
   );
 
   static final darkTheme = ThemeData(
-    primaryColor: primaryColor,
-    brightness: Brightness.dark,
+    colorScheme: ColorScheme.fromSeed(
+        brightness: Brightness.dark,
+        primary: primaryColor,
+        secondary: blackSecondary,
+        seedColor: primaryColor),
     scaffoldBackgroundColor: black,
     indicatorColor: white,
     useMaterial3: true,

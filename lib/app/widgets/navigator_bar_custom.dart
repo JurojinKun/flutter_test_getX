@@ -37,7 +37,7 @@ class NavigationBarCustom extends StatelessWidget {
               elevation: 0,
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
-              indicatorColor: Theme.of(context).primaryColor.withOpacity(0.8),
+              indicatorColor: Theme.of(context).colorScheme.primary.withOpacity(0.8),
               indicatorShape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
               destinations: [

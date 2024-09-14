@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test_getx/app/widgets/app_bar_custom.dart';
 
@@ -14,7 +15,9 @@ class ProfileView extends GetView<ProfileController> {
       appBar: PreferredSize(
             preferredSize: Size(MediaQuery.of(context).size.width,
                 AppBar().preferredSize.height),
-            child: const AppBarCustom(title: "ProfileView")),
+            child: AppBarCustom(
+              leading: IconButton(onPressed: () => Get.back(), icon: const Icon(CupertinoIcons.back, size: 30.0)),
+              title: "ProfileView")),
       body: const Center(
         child: Text(
           'ProfileView is working',

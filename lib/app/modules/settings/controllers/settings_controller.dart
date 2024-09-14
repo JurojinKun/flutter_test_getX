@@ -1,23 +1,16 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test_getx/app/theme/theme_service.dart';
 import 'package:get/get.dart';
 
 class SettingsController extends GetxController {
-  //TODO: Implement SettingsController
+  // initializing with the current theme of the device
+  Rx<ThemeMode> currentTheme = ThemeService().theme.obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  // function to switch between themes
+  void switchTheme() {
+    ThemeService().switchTheme();
+    currentTheme.value = currentTheme.value == ThemeMode.light
+        ? ThemeMode.dark
+        : ThemeMode.light;
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

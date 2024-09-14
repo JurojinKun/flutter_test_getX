@@ -8,7 +8,7 @@ class CustomTheme {
       black = const Color(0xFF222224),
       transparent = Colors.transparent,
       whiteSecondary = Colors.white,
-      blackSecondary = Colors.black;
+      blackSecondary = const Color(0xFF0D0D0E);
 
   static final lightTheme = ThemeData(
     colorScheme: ColorScheme.fromSeed(

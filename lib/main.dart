@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_getx/app/theme/custom_theme.dart';
 
 import 'package:get/get.dart';
 
@@ -16,6 +17,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Flutter Test Getx",
+      theme: CustomTheme.lightTheme,
+      darkTheme: CustomTheme.darkTheme,
+      themeMode: ThemeMode.system,
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
     );

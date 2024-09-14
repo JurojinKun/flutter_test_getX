@@ -16,18 +16,35 @@ class HomeView extends GetView<HomeController> {
             preferredSize: Size(MediaQuery.of(context).size.width,
                 AppBar().preferredSize.height),
             child: const AppBarCustom(title: "HomeView")),
-        body: ListView.builder(
-            itemCount: 25,
-            itemBuilder: (_, index) {
-              return GestureDetector(
-                onTap: () => Get.toNamed(Routes
-                    .profile), //add id:number corresponds to nested key wrapper to stack navigation bottom bar,
-                child: Container(
-                  margin: const EdgeInsets.all(15.0),
-                  height: 50.0,
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                ),
-              );
-            }));
+        body: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 15.0,
+                  crossAxisSpacing: 15.0),
+              shrinkWrap: true,
+              itemCount: 23,
+              itemBuilder: (_, index) {
+                return _itemGridView(context, index);
+              }),
+        ));
+  }
+
+  _itemGridView(BuildContext context, int index) {
+    return GestureDetector(
+      onTap: () => Get.toNamed(Routes
+          .profile), //add id:number corresponds to nested key wrapper to stack navigation bottom bar,
+      child: Card(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        elevation: 4,
+        shadowColor: Theme.of(context).primaryColor,
+        child: Center(
+          child: Text(index.toString()),
+        ),
+      ),
+    );
   }
 }

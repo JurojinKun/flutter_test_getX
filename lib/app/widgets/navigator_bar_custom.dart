@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NavigationBarCustom extends StatelessWidget {
@@ -14,7 +15,7 @@ class NavigationBarCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100.0,
+      height: 110.0,
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0))),
@@ -24,10 +25,11 @@ class NavigationBarCustom extends StatelessWidget {
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.5),
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)))),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15.0),
+                        topRight: Radius.circular(15.0)))),
           ),
           Align(
             alignment: AlignmentDirectional.center,
@@ -35,12 +37,22 @@ class NavigationBarCustom extends StatelessWidget {
               elevation: 0,
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
-              destinations: const [
-                NavigationDestination(label: 'Home', icon: Icon(Icons.home)),
+              indicatorColor: Theme.of(context).primaryColor.withOpacity(0.8),
+              indicatorShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              destinations: [
                 NavigationDestination(
-                    label: 'Search', icon: Icon(Icons.search)),
+                    label: 'Home',
+                    icon: Icon(CupertinoIcons.home,
+                        color: Theme.of(context).indicatorColor)),
                 NavigationDestination(
-                    label: 'Settings', icon: Icon(Icons.settings)),
+                    label: 'Search',
+                    icon: Icon(CupertinoIcons.search,
+                        color: Theme.of(context).indicatorColor)),
+                NavigationDestination(
+                    label: 'Settings',
+                    icon: Icon(CupertinoIcons.settings,
+                        color: Theme.of(context).indicatorColor)),
               ],
               selectedIndex: currentIndex,
               onDestinationSelected: onDestinationSelected,

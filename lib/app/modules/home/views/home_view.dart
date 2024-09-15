@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_getx/app/models/pokemon.dart';
 import 'package:flutter_test_getx/app/routes/app_pages.dart';
+import 'package:flutter_test_getx/app/translations/translations_service.dart';
 import 'package:flutter_test_getx/app/widgets/app_bar_custom.dart';
 import 'package:flutter_test_getx/app/widgets/error_message.dart';
 import 'package:flutter_test_getx/app/widgets/loading_custom.dart';
@@ -53,8 +54,28 @@ class HomeView extends GetView<HomeController> {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         elevation: 6,
         shadowColor: Theme.of(context).colorScheme.primary,
-        child: Center(
-          child: Text(pokemon.name),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text("#${pokemon.id.toString()}"),
+              ),
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.network(pokemon.imageUrl),
+                  Text(TranslationsService().localeLanguageApp ==
+                          const Locale('fr')
+                      ? pokemon.nameFr
+                      : pokemon.nameEn)
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

@@ -3,24 +3,39 @@ import 'package:get/get.dart';
 
 class ApiService extends GetConnect {
   Future<List<Pokemon>> getPokemons() async {
-    List<Pokemon> pokemons = [];
-
+    String baseUrl = 'https://pokeapi.co/api/v2';
     try {
-      String url = 'https://pokeapi.co/api/v2/pokemon';
-      final queryParams = {
-        'limit': '151',
-      };
+      final response = await get('$baseUrl/pokemon?limit=151');
+      List results = response.body['results'];
 
-      final response = await get(url, query: queryParams);
+      return Future.wait(results.map((pokemon) async {
+        String pokemonUrl = pokemon['url'];
+        int id = int.parse(pokemonUrl.split('/').reversed.toList()[1]);
 
-      if (response.status.hasError) {
-        throw Exception('Failed to load data: ${response.statusText}');
-      } else {
-        for (var pokemon in response.body["results"]) {
-          pokemons.add(Pokemon.fromJSON(pokemon));
+        // Fetch species for the name in the desired language
+        final speciesResponse = await get('$baseUrl/pokemon-species/$id');
+        final speciesData = speciesResponse.body;
+        String nameFr = '';
+        String nameEn = '';
+        for (var name in speciesData['names']) {
+          if (name['language']['name'] == 'fr') {
+            nameFr = name['name'];
+          } else if (name['language']['name'] == 'en') {
+            nameEn = name['name'];
+          }
+
+          // Sortir de la boucle si les deux noms ont été trouvés
+          if (nameFr.isNotEmpty && nameEn.isNotEmpty) break;
         }
-        return pokemons;
-      }
+
+        // Fetch image from the pokemon details
+        final detailResponse = await get('$baseUrl/pokemon/$id');
+        final sprites = detailResponse.body['sprites'];
+        String imageUrl = sprites['front_default'];
+
+        return Pokemon(
+            id: id, nameFr: nameFr, nameEn: nameEn, imageUrl: imageUrl);
+      }).toList());
     } catch (e) {
       throw Exception('Failed to load data: $e');
     }

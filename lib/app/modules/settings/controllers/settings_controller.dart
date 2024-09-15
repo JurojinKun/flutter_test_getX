@@ -9,13 +9,13 @@ class SettingsController extends GetxController {
 
   void switchTheme() {
     ThemeService().switchTheme();
-    currentTheme.value = currentTheme.value == ThemeMode.light
+    currentTheme(currentTheme.value == ThemeMode.light
         ? ThemeMode.dark
-        : ThemeMode.light;
+        : ThemeMode.light);
   }
 
   void switchLocaleLanguage(Locale newLocale) {
     TranslationsService().switchLocaleLanguage(newLocale);
-    currentLocale.value  = newLocale;
+    currentLocale(newLocale);
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_getx/app/models/pokemon.dart';
 import 'package:flutter_test_getx/app/routes/app_pages.dart';
 import 'package:flutter_test_getx/app/widgets/app_bar_custom.dart';
+import 'package:flutter_test_getx/app/widgets/error_message.dart';
+import 'package:flutter_test_getx/app/widgets/loading_custom.dart';
 
 import 'package:get/get.dart';
 
@@ -18,20 +21,29 @@ class HomeView extends GetView<HomeController> {
             child: AppBarCustom(title: "home.title".tr)),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 15.0,
-                  crossAxisSpacing: 15.0),
-              shrinkWrap: true,
-              itemCount: 23,
-              itemBuilder: (_, index) {
-                return _itemGridView(context, index);
-              }),
+          child: Obx(() {
+            if (controller.isLoading.value) {
+              return const LoadingCustom();
+            } else if (controller.errorMessage.isNotEmpty) {
+              return ErrorMessage(onRetry: controller.retryFetchDataHome);
+            } else {
+              return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 15.0,
+                      crossAxisSpacing: 15.0),
+                  shrinkWrap: true,
+                  itemCount: controller.pokemons.length,
+                  itemBuilder: (_, index) {
+                    Pokemon pokemon = controller.pokemons[index];
+                    return _itemGridView(context, pokemon);
+                  });
+            }
+          }),
         ));
   }
 
-  _itemGridView(BuildContext context, int index) {
+  _itemGridView(BuildContext context, Pokemon pokemon) {
     return GestureDetector(
       onTap: () => Get.toNamed(Routes
           .profile), //add id:number corresponds to nested key wrapper to stack navigation bottom bar,
@@ -42,7 +54,7 @@ class HomeView extends GetView<HomeController> {
         elevation: 6,
         shadowColor: Theme.of(context).colorScheme.primary,
         child: Center(
-          child: Text(index.toString()),
+          child: Text(pokemon.name),
         ),
       ),
     );

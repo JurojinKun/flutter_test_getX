@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class NavigationBarCustom extends StatelessWidget {
   final int currentIndex;
@@ -42,15 +43,15 @@ class NavigationBarCustom extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0)),
               destinations: [
                 NavigationDestination(
-                    label: 'Home',
+                    label: "home.title".tr,
                     icon: Icon(CupertinoIcons.home,
                         color: Theme.of(context).indicatorColor)),
                 NavigationDestination(
-                    label: 'Search',
+                    label: "searching.title".tr,
                     icon: Icon(CupertinoIcons.search,
                         color: Theme.of(context).indicatorColor)),
                 NavigationDestination(
-                    label: 'Settings',
+                    label: "settings.title".tr,
                     icon: Icon(CupertinoIcons.settings,
                         color: Theme.of(context).indicatorColor)),
               ],

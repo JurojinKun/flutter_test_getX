@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_getx/app/theme/custom_theme.dart';
 import 'package:flutter_test_getx/app/theme/theme_service.dart';
+import 'package:flutter_test_getx/app/translations/app_translations.dart';
+import 'package:flutter_test_getx/app/translations/translations_service.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -24,6 +26,9 @@ class MyApp extends StatelessWidget {
       theme: CustomTheme.lightTheme,
       darkTheme: CustomTheme.darkTheme,
       themeMode: ThemeService().theme,
+      translations: AppTranslations(),
+      locale: TranslationsService().localeLanguageApp,
+      fallbackLocale: const Locale('en'),
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
     );

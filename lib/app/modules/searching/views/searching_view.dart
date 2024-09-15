@@ -14,7 +14,7 @@ class SearchingView extends GetView<SearchingController> {
       appBar: PreferredSize(
             preferredSize: Size(MediaQuery.of(context).size.width,
                 AppBar().preferredSize.height),
-            child: const AppBarCustom(title: "SearchingView")),
+            child: AppBarCustom(title: "searching.title".tr)),
       body: const Center(
         child: Text(
           'SearchingView is working',

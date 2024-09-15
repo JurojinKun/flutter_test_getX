@@ -17,7 +17,7 @@ class ProfileView extends GetView<ProfileController> {
                 AppBar().preferredSize.height),
             child: AppBarCustom(
               leading: IconButton(onPressed: () => Get.back(), icon: const Icon(CupertinoIcons.back, size: 30.0)),
-              title: "ProfileView")),
+              title: "profile.title".tr)),
       body: const Center(
         child: Text(
           'ProfileView is working',

@@ -15,7 +15,7 @@ class HomeView extends GetView<HomeController> {
         appBar: PreferredSize(
             preferredSize: Size(MediaQuery.of(context).size.width,
                 AppBar().preferredSize.height),
-            child: const AppBarCustom(title: "HomeView")),
+            child: AppBarCustom(title: "home.title".tr)),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: GridView.builder(

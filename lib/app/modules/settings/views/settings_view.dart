@@ -16,13 +16,11 @@ class SettingsView extends GetView<SettingsController> {
         appBar: PreferredSize(
             preferredSize: Size(MediaQuery.of(context).size.width,
                 AppBar().preferredSize.height),
-            child: const AppBarCustom(title: "SettingsView")),
+            child: AppBarCustom(title: "settings.title".tr)),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
-              children: [
-                _changeTheme(context),
-              ],
+              children: [_changeTheme(context), _changeTranslations(context)],
             ),
           ),
         ));
@@ -39,14 +37,59 @@ class SettingsView extends GetView<SettingsController> {
         CupertinoIcons.brightness,
         size: 30,
       ),
-      title: const Text("Thème"),
-      subtitle: const Text("Changer le thème"),
+      title: Text("settings.theme.title".tr),
+      subtitle: Text("settings.theme.content".tr),
       trailing: Obx(
         () => Switch(
           value: controller.currentTheme.value == ThemeMode.dark,
           onChanged: (value) {
             controller.switchTheme();
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _changeTranslations(BuildContext context) {
+    return ListTile(
+      iconColor: Theme.of(context).indicatorColor,
+      titleTextStyle: FontSizes.textStyleCustomPokemonSolid(
+          Theme.of(context).indicatorColor, 20.0),
+      subtitleTextStyle: FontSizes.textStyleCustomPokemonSolid(
+          Theme.of(context).indicatorColor, 15.0),
+      leading: const Icon(
+        Icons.language,
+        size: 30,
+      ),
+      title: Text("settings.language.title".tr),
+      subtitle: Text("settings.language.content".tr),
+      trailing: Obx(
+        () => Padding(
+          padding: const EdgeInsets.only(right: 5.0),
+          child: DropdownButton<Locale>(
+            iconSize: 20.0,
+            icon: const Padding(
+              padding: EdgeInsets.only(left: 10.0),
+              child: Icon(CupertinoIcons.chevron_down),
+            ),
+            items: [
+              DropdownMenuItem(
+                value: const Locale("fr"),
+                child: Text("settings.french".tr),
+              ),
+              DropdownMenuItem(
+                value: const Locale("en"),
+                child: Text("settings.english".tr),
+              ),
+            ],
+            value: controller.currentLocale.value,
+            onChanged: (locale) {
+              // Assurez-vous que vous appelez la fonction correctement
+              if (locale != null) {
+                controller.switchLocaleLanguage(locale);
+              }
+            },
+          ),
         ),
       ),
     );

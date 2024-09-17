@@ -38,7 +38,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.searching,
-      page: () => const SearchingView(),
+      page: () => SearchingView(),
       binding: SearchingBinding(),
     ),
     GetPage(
@@ -71,7 +71,7 @@ class AppPages {
     if (routeSettings.name == Routes.searching) {
       return GetPageRoute(
           routeName: Routes.home,
-          page: () => const SearchingView(),
+          page: () => SearchingView(),
           binding: SearchingBinding());
     }
     return null;

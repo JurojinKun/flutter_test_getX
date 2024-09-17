@@ -1,23 +1,20 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter_test_getx/app/data/api_service.dart';
 import 'package:get/get.dart';
 
 class SearchingController extends GetxController {
-  //TODO: Implement SearchingController
+  Rx<String> errorMessage = ''.obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  final ApiService apiService = ApiService();
+
+  Future<void> searchPokemon(String name) async {
+    try {
+      await apiService.searchPokemonByName(name);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      errorMessage(e.toString());
+    }
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

@@ -20,7 +20,7 @@ class AppBarCustom extends StatelessWidget {
       centerTitle: true,
       flexibleSpace: ClipRRect(
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
           child: Container(
             color: Colors.transparent,
           ),

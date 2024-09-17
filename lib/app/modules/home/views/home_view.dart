@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test_getx/app/models/pokemon.dart';
 import 'package:flutter_test_getx/app/routes/app_pages.dart';
@@ -53,9 +55,15 @@ class HomeView extends GetView<HomeController> {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         elevation: 6,
-        shadowColor: Theme.of(context).colorScheme.primary,
         child: Stack(
           children: [
+            ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+            child: const SizedBox(),
+          ),
+        ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Align(
@@ -74,7 +82,7 @@ class HomeView extends GetView<HomeController> {
                       : pokemon.nameEn)
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

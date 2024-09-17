@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_getx/app/models/pokemon.dart';
 import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
@@ -27,7 +28,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.home,
-      page: () => const HomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -42,47 +43,47 @@ class AppPages {
     ),
     GetPage(
       name: Routes.profile,
-      page: () => const ProfileView(),
+      page: () {
+        final Pokemon pokemon = Get.arguments as Pokemon;
+        return ProfileView(pokemon: pokemon);
+      },
       binding: ProfileBinding(),
     ),
   ];
 
   static Route<dynamic>? generateRouteHome(RouteSettings routeSettings) {
     if (routeSettings.name == Routes.home) {
-          return GetPageRoute(
-            routeName: Routes.home,
-            page: () => const HomeView(),
-            binding: HomeBinding()
-          );
-        } else if (routeSettings.name == Routes.profile) {
-          return GetPageRoute(
-            routeName: Routes.profile,
-            page: () => const ProfileView(),
-            binding: ProfileBinding()
-          );
-        }
-        return null;
+      return GetPageRoute(
+          routeName: Routes.home,
+          page: () => HomeView(),
+          binding: HomeBinding());
+    } else if (routeSettings.name == Routes.profile) {
+      final pokemon = routeSettings.arguments as Pokemon;
+      return GetPageRoute(
+          routeName: Routes.profile,
+          page: () => ProfileView(pokemon: pokemon),
+          binding: ProfileBinding());
+    }
+    return null;
   }
 
   static Route<dynamic>? generateRouteSearching(RouteSettings routeSettings) {
     if (routeSettings.name == Routes.searching) {
-          return GetPageRoute(
-            routeName: Routes.home,
-            page: () => const SearchingView(),
-            binding: SearchingBinding()
-          );
-        }
-        return null;
+      return GetPageRoute(
+          routeName: Routes.home,
+          page: () => const SearchingView(),
+          binding: SearchingBinding());
+    }
+    return null;
   }
 
   static Route<dynamic>? generateRouteSettings(RouteSettings routeSettings) {
     if (routeSettings.name == Routes.settings) {
-          return GetPageRoute(
-            routeName: Routes.home,
-            page: () => const SettingsView(),
-            binding: SettingsBinding()
-          );
-        }
-        return null;
+      return GetPageRoute(
+          routeName: Routes.home,
+          page: () => const SettingsView(),
+          binding: SettingsBinding());
+    }
+    return null;
   }
 }

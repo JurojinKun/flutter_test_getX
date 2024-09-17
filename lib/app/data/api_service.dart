@@ -2,10 +2,12 @@ import 'package:flutter_test_getx/app/models/pokemon.dart';
 import 'package:get/get.dart';
 
 class ApiService extends GetConnect {
-  Future<List<Pokemon>> getPokemons() async {
+  Future<List<Pokemon>> getPokemons(int page) async {
+    int limit = 20;
+    int offset = page * limit;
     String baseUrl = 'https://pokeapi.co/api/v2';
     try {
-      final response = await get('$baseUrl/pokemon?limit=151');
+      final response = await get('$baseUrl/pokemon?limit=$limit&offset=$offset');
       List results = response.body['results'];
 
       return Future.wait(results.map((pokemon) async {
@@ -37,7 +39,7 @@ class ApiService extends GetConnect {
             id: id, nameFr: nameFr, nameEn: nameEn, imageUrl: imageUrl);
       }).toList());
     } catch (e) {
-      throw Exception('Failed to load data: $e');
+      throw Exception('Failed to load Pokémon: $e');
     }
   }
 }

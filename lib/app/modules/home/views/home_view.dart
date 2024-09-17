@@ -9,11 +9,20 @@ import 'package:flutter_test_getx/app/widgets/error_message.dart';
 import 'package:flutter_test_getx/app/widgets/loading_custom.dart';
 
 import 'package:get/get.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({super.key});
+  final RefreshController _refreshController = RefreshController();
+
+  HomeView({super.key});
+
+  void _onLoading() async {
+    await controller.fetchMoreDataHome();
+    _refreshController.loadComplete();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,34 +31,63 @@ class HomeView extends GetView<HomeController> {
             preferredSize: Size(MediaQuery.of(context).size.width,
                 AppBar().preferredSize.height),
             child: AppBarCustom(title: "home.title".tr)),
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Obx(() {
-            if (controller.isLoading.value) {
-              return const LoadingCustom();
-            } else if (controller.errorMessage.isNotEmpty) {
-              return ErrorMessage(onRetry: controller.retryFetchDataHome);
-            } else {
-              return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 15.0,
-                      crossAxisSpacing: 15.0),
-                  shrinkWrap: true,
-                  itemCount: controller.pokemons.length,
-                  itemBuilder: (_, index) {
-                    Pokemon pokemon = controller.pokemons[index];
-                    return _itemGridView(context, pokemon);
-                  });
-            }
-          }),
-        ));
+        body: Obx(() {
+          if (controller.isLoading.value) {
+            return const LoadingCustom();
+          } else if (controller.errorMessage.isNotEmpty) {
+            return ErrorMessage(onRetry: controller.retryFetchDataHome);
+          } else {
+            return SafeArea(
+              bottom: false,
+              child: SmartRefresher(
+                enablePullDown: false,
+                enablePullUp: true,
+                controller: _refreshController,
+                footer: CustomFooter(
+                    height: MediaQuery.of(context).padding.bottom + 55.0,
+                    builder: (_, mode) {
+                      Widget body;
+                      if (mode == LoadStatus.loading) {
+                        body = const SizedBox(
+                          height: 25.0,
+                          width: 25.0,
+                          child: LoadingCustom(),
+                        );
+                      } else if (mode == LoadStatus.noMore) {
+                        body = const SizedBox();
+                      } else {
+                        body = const SizedBox();
+                      }
+                      return SizedBox(
+                        height: 55.0,
+                        child: Center(child: body),
+                      );
+                    }),
+                onLoading: () => _onLoading(),
+                child: GridView.builder(
+                  padding: const EdgeInsets.all(15.0),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 15.0,
+                            crossAxisSpacing: 15.0),
+                    shrinkWrap: false,
+                    itemCount: controller.pokemons.length,
+                    itemBuilder: (_, index) {
+                      Pokemon pokemon = controller.pokemons[index];
+                      return _itemGridView(context, pokemon);
+                    }),
+              ),
+            );
+          }
+        }));
   }
 
   _itemGridView(BuildContext context, Pokemon pokemon) {
     return GestureDetector(
-      onTap: () => Get.toNamed(Routes
-          .profile), //add id:number corresponds to nested key wrapper to stack navigation bottom bar,
+      onTap: () => Get.toNamed(Routes.profile,
+          arguments:
+              pokemon), //add id:number corresponds to nested key wrapper to stack navigation bottom bar,
       child: Card(
         color: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
         shape:
@@ -57,13 +95,6 @@ class HomeView extends GetView<HomeController> {
         elevation: 6,
         child: Stack(
           children: [
-            ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
-            child: const SizedBox(),
-          ),
-        ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Align(

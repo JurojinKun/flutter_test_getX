@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test_getx/app/models/pokemon.dart';
 import 'package:flutter_test_getx/app/routes/app_pages.dart';

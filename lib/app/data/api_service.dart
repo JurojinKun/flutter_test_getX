@@ -40,19 +40,4 @@ class ApiService extends GetConnect {
       throw Exception('Failed to load Pokémon: $e');
     }
   }
-
-  Future<void> searchPokemonByName(String name) async {
-    String baseUrl = 'https://pokeapi.co/api/v2';
-
-    try {
-      final response = await get('$baseUrl/pokemon/$name');
-      if (response.statusCode == 200) {
-        print(response.body);
-      } else {
-        throw Exception('Failed to load Pokémon');
-      }
-    } catch (e) {
-      throw Exception('Error: $e');
-    }
-  }
 }

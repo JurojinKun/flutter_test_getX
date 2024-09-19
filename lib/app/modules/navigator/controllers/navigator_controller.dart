@@ -7,21 +7,6 @@ class NavigatorController extends GetxController {
   final searchingNavigatorKey = Get.nestedKey(2);
   final settingsNavigatorKey = Get.nestedKey(3);
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   void changeIndex(int index) {
     if (currentIndex.value == index) {
       switch (index) {

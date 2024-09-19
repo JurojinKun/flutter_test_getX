@@ -38,16 +38,19 @@ class SearchingController extends GetxController {
   }
 
   Future<void> searchPokemon(String name) async {
-    try {
-      if (name.trim().isNotEmpty) {
+    if (name.trim().isNotEmpty) {
+      try {
+        isSearching.value = true;
         List<Pokemon> pokemons = Get.find<HomeController>().pokemons;
         resultsSearch(searchPokemonByPartialName(name, pokemons));
+      } catch (e) {
+        if (kDebugMode) {
+          print(e);
+        }
+        errorMessage(e.toString());
+      } finally {
+        isSearching.value = false;
       }
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-      errorMessage(e.toString());
     }
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test_getx/app/theme/custom_font_sizes.dart';
-import 'package:flutter_test_getx/app/theme/custom_theme.dart';
 import 'package:flutter_test_getx/app/widgets/app_bar_custom.dart';
 
 import 'package:get/get.dart';
@@ -45,7 +44,7 @@ class SettingsView extends GetView<SettingsController> {
         () => CupertinoSwitch(
           activeColor: Theme.of(context).colorScheme.primary,
           trackColor: Theme.of(context).colorScheme.primary,
-          thumbColor: controller.currentTheme.value == ThemeMode.dark ? CustomTheme.black : CustomTheme.white,
+          thumbColor: Theme.of(context).colorScheme.secondary,
           value: controller.currentTheme.value == ThemeMode.dark,
           onChanged: (value) {
             controller.switchTheme();
@@ -77,7 +76,7 @@ class SettingsView extends GetView<SettingsController> {
               padding: EdgeInsets.only(left: 10.0),
               child: Icon(CupertinoIcons.chevron_down),
             ),
-            dropdownColor: controller.currentTheme.value == ThemeMode.dark ? CustomTheme.blackSecondary : CustomTheme.whiteSecondary,
+            dropdownColor: Theme.of(context).colorScheme.secondary,
             elevation: 6,
             items: [
               DropdownMenuItem(

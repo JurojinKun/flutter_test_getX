@@ -14,6 +14,7 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
+  final appBar = AppBar();
   final RefreshController _refreshController = RefreshController();
 
   HomeView({super.key});
@@ -37,47 +38,49 @@ class HomeView extends GetView<HomeController> {
           } else if (controller.errorMessage.isNotEmpty) {
             return ErrorMessage(onRetry: controller.retryFetchDataHome);
           } else {
-            return SafeArea(
-              bottom: false,
-              child: SmartRefresher(
-                enablePullDown: false,
-                enablePullUp: true,
-                controller: _refreshController,
-                footer: CustomFooter(
-                    height: MediaQuery.of(context).padding.bottom + 55.0,
-                    builder: (_, mode) {
-                      Widget body;
-                      if (mode == LoadStatus.loading) {
-                        body = const SizedBox(
-                          height: 25.0,
-                          width: 25.0,
-                          child: LoadingCustom(),
-                        );
-                      } else if (mode == LoadStatus.noMore) {
-                        body = const SizedBox();
-                      } else {
-                        body = const SizedBox();
-                      }
-                      return SizedBox(
-                        height: 55.0,
-                        child: Center(child: body),
+            return SmartRefresher(
+              enablePullDown: false,
+              enablePullUp: true,
+              controller: _refreshController,
+              footer: CustomFooter(
+                  height: MediaQuery.of(context).padding.bottom + 55.0,
+                  builder: (_, mode) {
+                    Widget body;
+                    if (mode == LoadStatus.loading) {
+                      body = const SizedBox(
+                        height: 25.0,
+                        width: 25.0,
+                        child: LoadingCustom(),
                       );
-                    }),
-                onLoading: () => _onLoading(),
-                child: GridView.builder(
-                  padding: const EdgeInsets.all(15.0),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 15.0,
-                            crossAxisSpacing: 15.0),
-                    shrinkWrap: false,
-                    itemCount: controller.pokemons.length,
-                    itemBuilder: (_, index) {
-                      Pokemon pokemon = controller.pokemons[index];
-                      return _itemGridView(context, pokemon);
-                    }),
-              ),
+                    } else if (mode == LoadStatus.noMore) {
+                      body = const SizedBox();
+                    } else {
+                      body = const SizedBox();
+                    }
+                    return SizedBox(
+                      height: 55.0,
+                      child: Center(child: body),
+                    );
+                  }),
+              onLoading: () => _onLoading(),
+              child: GridView.builder(
+                  padding: EdgeInsets.fromLTRB(
+                      15.0,
+                      appBar.preferredSize.height +
+                          MediaQuery.of(context).padding.top +
+                          25.0,
+                      15.0,
+                      15.0),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 15.0,
+                      crossAxisSpacing: 15.0),
+                  shrinkWrap: false,
+                  itemCount: controller.pokemons.length,
+                  itemBuilder: (_, index) {
+                    Pokemon pokemon = controller.pokemons[index];
+                    return _itemGridView(context, pokemon);
+                  }),
             );
           }
         }));

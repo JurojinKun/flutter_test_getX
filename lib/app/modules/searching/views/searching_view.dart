@@ -78,11 +78,14 @@ class SearchingView extends GetView<SearchingController> {
   }
 
   Widget _body() {
-    return Obx(() => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
-        child: controller.searchText.value.trim().isEmpty
-            ? _recentsSearch()
-            : _resultsSearch()));
+    return Obx(() => SizedBox.expand(
+          child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+              child: controller.searchText.value.trim().isEmpty
+                  ? _recentsSearch()
+                  : _resultsSearch()),
+        ));
   }
 
   Widget _recentsSearch() {

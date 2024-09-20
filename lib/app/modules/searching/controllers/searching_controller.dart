@@ -5,8 +5,12 @@ import 'package:flutter_test_getx/app/models/pokemon.dart';
 import 'package:flutter_test_getx/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter_test_getx/app/translations/translations_service.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SearchingController extends GetxController {
+  final _box = GetStorage();
+  final _key = 'recentsSearch';
+
   Rx<String> errorMessage = ''.obs;
 
   late TextEditingController searchController;
@@ -25,6 +29,7 @@ class SearchingController extends GetxController {
       searchText.value = searchController.text.trim();
       await searchPokemon(searchText.value);
     });
+    recentsSearch(_loadRecentsSearchFromBox());
     super.onInit();
   }
 
@@ -64,11 +69,37 @@ class SearchingController extends GetxController {
     }).toList();
   }
 
+  List<Pokemon> _loadRecentsSearchFromBox() {
+    List pokemonData = _box.read(_key) ?? [];
+    List<Pokemon> pokemons =
+        pokemonData.map((data) => Pokemon.fromJSON(data)).toList();
+    return pokemons;
+  }
+
+  void _saveRecentsSearchToBox(List<Pokemon> pokemons) {
+    List<Map<String, dynamic>> pokemonJsonList =
+        pokemons.map((pokemon) => pokemon.toJson()).toList();
+    _box.write(_key, pokemonJsonList);
+  }
+
   void addPokemonToRecentSearch(Pokemon pokemon) {
-    recentsSearch.add(pokemon);
+    if (!recentsSearch.contains(pokemon)) {
+      recentsSearch.add(pokemon);
+    } else {
+      movePokemonToFirstIndex(recentsSearch, pokemon);
+    }
+    _saveRecentsSearchToBox(recentsSearch);
   }
 
   void removePokemonToRecentSearch(Pokemon pokemon) {
     recentsSearch.removeWhere((item) => item.id == pokemon.id);
+    _saveRecentsSearchToBox(recentsSearch);
+  }
+
+  void movePokemonToFirstIndex(List<Pokemon> pokemons, Pokemon pokemonToMove) {
+    if (pokemons.indexWhere((pokemon) => pokemon.id == pokemonToMove.id) != 0) {
+      pokemons.remove(pokemonToMove);
+      pokemons.insert(0, pokemonToMove);
+    }
   }
 }

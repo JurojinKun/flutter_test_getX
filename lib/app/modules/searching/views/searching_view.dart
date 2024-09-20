@@ -42,7 +42,7 @@ class SearchingView extends GetView<SearchingController> {
                   controller: controller.searchController,
                   textInputAction: TextInputAction.search,
                   decoration: InputDecoration(
-                      hintText: 'Rechercher un pokémon...',
+                      hintText: "searching.search".tr,
                       hintStyle: TextStyle(
                           color: Theme.of(context)
                               .indicatorColor
@@ -90,9 +90,8 @@ class SearchingView extends GetView<SearchingController> {
 
   Widget _recentsSearch() {
     return controller.recentsSearch.isEmpty
-        ? const Center(
-            child:
-                Text("Pas de recherches récentes", textAlign: TextAlign.center),
+        ? Center(
+            child: Text("searching.no_recents".tr, textAlign: TextAlign.center),
           )
         : ListView.builder(
             shrinkWrap: true,
@@ -107,8 +106,9 @@ class SearchingView extends GetView<SearchingController> {
     return controller.isSearching.value
         ? const LoadingCustom()
         : controller.resultsSearch.isEmpty
-            ? const Center(
-                child: Text("Pas de résultats", textAlign: TextAlign.center),
+            ? Center(
+                child: Text("searching.no_results".tr,
+                    textAlign: TextAlign.center),
               )
             : ListView.builder(
                 shrinkWrap: true,

@@ -6,6 +6,9 @@ class AppTranslations extends Translations {
         'fr': {
           "home.title": "Accueil",
           "searching.title": "Recherche",
+          "searching.search": "Rechercher un pokémon...",
+          "searching.no_recents": "Pas de recherches récentes",
+          "searching.no_results": "Pas de résultats",
           "settings.title": "Paramètres",
           "settings.theme.title": "Thème",
           "settings.theme.content": "Changer le thème",
@@ -18,6 +21,9 @@ class AppTranslations extends Translations {
         'en': {
           "home.title": "Home",
           "searching.title": "Search",
+          "searching.search": "Search a pokemon",
+          "searching.no_recents": "No recent searches",
+          "searching.no_results": "No results",
           "settings.title": "Settings",
           "settings.theme.title": "Theme",
           "settings.theme.content": "Change theme",

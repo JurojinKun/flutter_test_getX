@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test_getx/app/modules/home/wrappers/home_wrapper.dart';
-import 'package:flutter_test_getx/app/modules/searching/wrappers/searching_wrapper.dart';
-import 'package:flutter_test_getx/app/modules/settings/wrappers/settings_wrapper.dart';
 import 'package:flutter_test_getx/app/widgets/navigator_bar_custom.dart';
 
 import 'package:get/get.dart';
@@ -17,10 +14,10 @@ class NavigatorView extends GetView<NavigatorController> {
         extendBody: true,
         body: IndexedStack(
           index: controller.currentIndex.value,
-          children: const [
-            HomeWrapper(),
-            SearchingWrapper(),
-            SettingsWrapper()
+          children: [
+            controller.homeWrapper.value ?? const SizedBox(),
+            controller.searchWrapper.value ?? const SizedBox(),
+            controller.settingsWrapper.value ?? const SizedBox(),
           ],
         ),
         bottomNavigationBar: NavigationBarCustom(
